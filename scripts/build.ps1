@@ -34,10 +34,7 @@ try {
     Copy-Item -Recurse -Force licenses dist/HousePlanning/
     Copy-Item -Recurse -Force docs dist/HousePlanning/
     if (Test-Path samples) { Copy-Item -Recurse -Force samples dist/HousePlanning/ }
-    $smoke = Start-Process -FilePath "$workspaceRoot/dist/HousePlanning/HousePlanning.exe" -ArgumentList '--headless','--','--self-test' -WindowStyle Hidden -PassThru -RedirectStandardOutput "$workspaceRoot/tmp/export-smoke.log" -RedirectStandardError "$workspaceRoot/tmp/export-smoke-errors.log"
-    if (!$smoke.WaitForExit(45000)) { $smoke.Kill(); throw 'Exported application smoke test timed out' }
-    Get-Content "$workspaceRoot/tmp/export-smoke.log"
-    if ($smoke.ExitCode -ne 0 -or !(Select-String -Path "$workspaceRoot/tmp/export-smoke.log" -Pattern 'APP_SELF_TEST_PASS' -Quiet)) { throw 'Exported application smoke test failed' }
+    & "$PSScriptRoot/test-exported-app.ps1" -FilePath "$workspaceRoot/dist/HousePlanning/HousePlanning.exe" -OutputPath "$workspaceRoot/tmp/export-smoke.log" -ErrorPath "$workspaceRoot/tmp/export-smoke-errors.log"
     Compress-Archive -Path dist/HousePlanning/* -DestinationPath dist/HousePlanning-win-x64.zip -Force
   }
 } finally { Pop-Location }
