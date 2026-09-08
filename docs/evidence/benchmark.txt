@@ -1,0 +1,5 @@
+GPU: NVIDIA GeForce RTX 2070 SUPER
+Renderer: forward_plus
+Viewport: (1920, 1080)
+Average FPS: 72.02
+P95 ms: 13.89

@@ -1,0 +1,10 @@
+.tools/
+.godot/
+**/bin/
+**/obj/
+dist/
+tmp/
+*.user
+*.houseplan
+!samples/*.houseplan
+src/App/native/*.dll
